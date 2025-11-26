@@ -9,4 +9,4 @@ catalog = [
 ]
 
 for phone in catalog:
-    print(f"{phone.brand} - {phone.model} - {phone.number}")
+    print(f"{phone.brand} - {phone.model} , {phone.number}")
