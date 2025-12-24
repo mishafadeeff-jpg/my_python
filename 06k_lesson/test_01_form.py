@@ -14,11 +14,9 @@ def driver():
 
 
 def test_form_validation(driver):
-    driver.get(
-        "https://bonigarcia.dev/selenium-webdriver-java/data-types.html"
-    )
-    wait = WebDriverWait(driver, 10)
+    driver.get("https://bonigarcia.dev/selenium-webdriver-java/data-types.html")  # [web:38]
 
+    wait = WebDriverWait(driver, 10)
     wait.until(EC.presence_of_element_located((By.NAME, "first-name")))
 
     driver.find_element(By.NAME, "first-name").send_keys("Иван")
@@ -32,3 +30,17 @@ def test_form_validation(driver):
     driver.find_element(By.NAME, "company").send_keys("SkyPro")
 
     driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+
+
+    zip_error = driver.find_element(By.ID, "zip-code")
+    assert "alert-danger" in zip_error.get_attribute("class")  # [file:79]
+
+    green_ids = [
+        "first-name", "last-name", "address",
+        "e-mail", "phone", "city",
+        "country", "job-position", "company",
+    ]
+
+    for field_id in green_ids:
+        elem = driver.find_element(By.ID, field_id)
+        assert elem.text.strip() != ""
