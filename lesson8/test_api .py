@@ -18,46 +18,42 @@ class TestAPI:
             "users": {}
         }
 
-        # POST запрос на создание проекта
         r = requests.post(
             self.base_url + '/api-v2/projects',
             headers={"Authorization": self.auth_token},
             data=data
         )
 
-        assert r.status_code in [200, 201]
+        assert r.status_code in [200,201]
         self.__class__.id_project = r.json()["id"]
 
     @pytest.mark.order(2)
     def test_put(self):
-        assert self.__class__.id_project is not None, \
-            "ID проекта не получен на входе теста!"
+        assert self.__class__.id_project is not None
+
 
         data = {
             "title": self.project_name + "_edited",
         }
 
-        # PUT запрос на изменение проекта
         r = requests.put(
             self.base_url + '/api-v2/projects/' + self.__class__.id_project,
             headers={"Authorization": self.auth_token},
             data=data
         )
 
-        assert r.status_code in [200, 201]
+        assert r.status_code in [200]
 
     @pytest.mark.order(3)
     def test_get(self):
-        assert self.__class__.id_project is not None, \
-            "ID проекта не получен на входе теста!"
+        assert self.__class__.id_project is not None
 
-        # GET запрос на получение информации о проекте
         r = requests.get(
             self.base_url + '/api-v2/projects/' + self.__class__.id_project,
             headers={"Authorization": self.auth_token},
         )
 
-        assert r.status_code in [200, 201]
+        assert r.status_code in [200]
 
 
 if __name__ == '__main__':
